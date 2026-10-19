@@ -11,7 +11,14 @@ from pypdf import PdfReader
 from export_word_ai import tao_file_word_de_thi
 
 app = FastAPI(title="Hệ thống tạo đề thi bằng AI")
+from fastapi.responses import FileResponse
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
+
+@app.get("/")
+def home():
+    return FileResponse(BASE_DIR / "index.html")
 
 def read_ppct(file_ppct):
     if not file_ppct or not file_ppct.filename:
