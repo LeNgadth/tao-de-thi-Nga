@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Đề Thi Bằng AI Theo CV 7991</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h2 class="text-center mb-4 text-primary">Hệ Thống Tạo Đề Thi Bằng AI Theo CV 7991</h2>
+        
+        <!-- Form Gửi Dữ Liệu -->
+        <form action="/api/tao-ma-tran" method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+            
+            <!-- 1. Thông tin chung & Upload -->
+            <h4 class="text-success mb-3">1. Thông tin chung & Upload PPCT</h4>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Môn học</label>
+                    <select name="mon_hoc" class="form-select" required>
+                        <option value="">-- Chọn môn học --</option>
+                        <option value="Tin học">Tin học</option>
+                        <option value="Toán">Toán</option>
+                        <option value="Vật lý">Vật lý</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Khối lớp</label>
+                    <select name="khoi_lop" class="form-select" required>
+                        <option value="">-- Chọn khối lớp --</option>
+                        <option value="10">Khối 10</option>
+                        <option value="11">Khối 11</option>
+                        <option value="12">Khối 12</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Loại kiểm tra</label>
+                    <select name="loai_kiem_tra" class="form-select">
+                        <option value="Giữa kỳ 1">Giữa kỳ 1</option>
+                        <option value="Cuối kỳ 1">Cuối kỳ 1</option>
+                        <option value="Giữa kỳ 2">Giữa kỳ 2</option>
+                        <option value="Cuối kỳ 2">Cuối kỳ 2</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Thời gian (phút)</label>
+                    <input type="number" name="thoi_gian" class="form-control" value="45" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Chủ đề / phạm vi kiến thức cần kiểm tra</label>
+                <textarea name="chu_de" class="form-control" rows="3" placeholder="Ví dụ: Tin học 10 - câu lệnh rẽ nhánh, câu lệnh lặp; hoặc ghi rõ các bài cần kiểm tra"></textarea>
+                <div class="form-text">AI sẽ ưu tiên nội dung này và văn bản trích xuất từ PPCT PDF (nếu có).</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Upload File PPCT (.pdf)</label>
+                <input type="file" name="file_ppct" accept=".pdf" class="form-control">
+                <div class="form-text text-muted">Chỉ hỗ trợ file định dạng .pdf</div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- 2. Cấu trúc ma trận số lượng câu hỏi -->
+            <h4 class="text-success mb-3">2. Cấu trúc đề thi (Số lượng câu hỏi)</h4>
+            <table class="table table-bordered align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-start">Dạng câu hỏi</th>
+                        <th>Biết</th>
+                        <th>Hiểu</th>
+                        <th>Vận dụng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-start fw-bold">Dạng I (4 lựa chọn)</td>
+                        <td><input type="number" name="dang1_biet" class="form-control text-center" value="8" min="0"></td>
+                        <td><input type="number" name="dang1_hieu" class="form-control text-center" value="4" min="0"></td>
+                        <td><input type="number" name="dang1_vandung" class="form-control text-center" value="0" min="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start fw-bold">Dạng II (Đúng/Sai)</td>
+                        <td><input type="number" name="dang2_biet" class="form-control text-center" value="1" min="0"></td>
+                        <td><input type="number" name="dang2_hieu" class="form-control text-center" value="1" min="0"></td>
+                        <td><input type="number" name="dang2_vandung" class="form-control text-center" value="0" min="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start fw-bold">Dạng III (Tự luận)</td>
+                        <td><input type="number" name="dang3_biet" class="form-control text-center" value="0" min="0"></td>
+                        <td><input type="number" name="dang3_hieu" class="form-control text-center" value="0" min="0"></td>
+                        <td><input type="number" name="dang3_vandung" class="form-control text-center" value="0" min="0"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-success w-100 mt-3 py-2 fw-bold">✨ Dùng AI tạo câu hỏi & Xuất Đề Thi (Word)</button>
+        </form>
+        <div class="alert alert-warning mt-3">
+            Trên Render cần cấu hình biến môi trường <strong>OPENAI_API_KEY</strong>. Sau khi tạo đề, vui lòng rà soát câu hỏi và đáp án trước khi sử dụng.
+        </div>
+    </div>
+</body>
+</html>
